@@ -10,4 +10,4 @@ Run `mvn allure:serve`
 
 # Note
 - Use login URL that allows captcha bypass
-- Test script was intended for an account that does not have any existing installed app on the hosting
+- Test account used only have 1 active hosting and 0 installed app on the hosting
