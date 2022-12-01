@@ -1,4 +1,4 @@
-# Framework, Tool, and Programming Language
+# Tool, and Programming Language
 Selenium, Cucumber, JUnit, Allure, Maven, Java
 
 # Execute Test
