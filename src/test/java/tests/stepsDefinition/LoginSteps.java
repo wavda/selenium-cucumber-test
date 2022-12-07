@@ -19,13 +19,13 @@ public class LoginSteps {
         properties = contextSteps.properties;
     }
 
-    @Given("User is on the login page")
-    public void I_visit_login_page() {
+    @Given("User visit the login page")
+    public void user_visit_the_login_page() {
         loginPage.navigateToPage().acceptCookie();
     }
 
     @When("User enter email and password")
-    public void enter_text() {
+    public void user_enter_email_and_password() {
         String email = System.getProperty("email", properties.getProperty("EMAIL"));
         String password = System.getProperty("password", properties.getProperty("PASSWORD"));
 
@@ -35,13 +35,13 @@ public class LoginSteps {
     }
 
     @When("User click on the login button")
-    public void click_login() {
+    public void user_click_login_button() {
         loginPage.clickLogin();
         general.waitLoadingAnimationDisappear();
     }
 
     @Then("login success and profile menu should be displayed")
-    public void check_profile_page() {
+    public void login_success_and_profile_menu_should_display() {
         general.waitLoadingAnimationDisappear();
         general.verifyClientLoggedIn();
     }

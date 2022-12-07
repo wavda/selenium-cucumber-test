@@ -16,7 +16,7 @@ public class LoginPage {
     }
 
     public LoginPage navigateToPage() {
-        String url = properties.getProperty("URL");
+        String url = properties.getProperty("LOGIN_URL");
         utils.navigateToUrl(url);
         return this;
     }

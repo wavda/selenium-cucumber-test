@@ -5,73 +5,86 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import tests.pages.General;
 import tests.pages.panel.HomePage;
-import tests.pages.panel.HostingPage;
+import tests.pages.panel.HostingDashboardPage;
+import tests.pages.panel.WebsiteInstallerPage;
+import tests.pages.panel.WordPressDashboardPage;
 import tests.utils.PasswordGenerator;
 
 public class HostingSteps {
     General general;
     HomePage homePage;
-    HostingPage hostingPage;
+    HostingDashboardPage hostingPage;
+    WebsiteInstallerPage websiteInstallerPage;
+    WordPressDashboardPage wordPressDashboardPage;
 
     public HostingSteps(ContextSteps contextSteps) {
         general = new General(contextSteps);
         homePage = new HomePage(contextSteps);
-        hostingPage = new HostingPage(contextSteps);
+        hostingPage = new HostingDashboardPage(contextSteps);
+        websiteInstallerPage = new WebsiteInstallerPage(contextSteps);
+        wordPressDashboardPage = new WordPressDashboardPage(contextSteps);
     }
 
-    @Given("User is on the manage hosting page")
-    public void iVisitManageHostingPage() {
+    @Given("User visit manage hosting page")
+    public void user_visit_manage_hosting_page() {
         homePage.clickManageOrder();
         hostingPage.verifyPageDisplayed();
     }
 
     @When("User navigate to auto installer page")
-    public void navigate_to_auto_installer() {
+    public void user_navigate_to_auto_installer() {
         hostingPage.navigateToAutoInstallerPage();
+        websiteInstallerPage.verifyUrl();
         general.waitLoadingAnimationDisappear();
+    }
+
+    @When("User click auto installer")
+    public void user_click_auto_installer() {
+        wordPressDashboardPage.navigateToAutoInstaller();
+        websiteInstallerPage.verifyUrl();
     }
 
     @When("User select {string} auto-installer")
-    public void select_auto_installer(String application_name) {
-        hostingPage.selectAutoInstallerApplication(application_name);
+    public void user_select_application_auto_installer(String application_name) {
+        websiteInstallerPage.selectAutoInstallerApplication(application_name);
         general.waitLoadingAnimationDisappear();
-        hostingPage.verifyAutoInstallerPopupDisplayed(application_name);
+        websiteInstallerPage.verifyAutoInstallerPopupDisplayed(application_name);
     }
 
     @When("User enter site title and admin password")
-    public void input_site_title_and_password() {
+    public void user_enter_site_title_and_admin_password() {
         String password = new PasswordGenerator().generateRandomPassword(7) + "@123";
-        hostingPage.inputAutoInstallerWebsiteCredentials(password);
+        websiteInstallerPage.inputAutoInstallerWebsiteCredentials(password);
     }
 
     @When("User click on the button next and install")
-    public void click_next_and_install() {
-        hostingPage
+    public void user_click_button_next_and_install() {
+        websiteInstallerPage
                 .clickNext()
                 .clickConfirmApplicationInstallation();
     }
 
     @Then("{string} installation success")
-    public void verify_installation_success(String application_name) {
+    public void application_installation_success(String application_name) {
         general.waitLoadingAnimationDisappear();
-        hostingPage.verifyInstallationSuccess(application_name);
+        wordPressDashboardPage.verifyInstallationSuccess(application_name);
     }
 
     @When("User click on the button {string} from installed application action menu")
-    public void click_action_menu(String selected_action) {
-        hostingPage.selectActionMenu(selected_action);
+    public void user_click_button_action_from_installed_action_menu(String selected_action) {
+        websiteInstallerPage.selectActionMenu(selected_action);
     }
 
     @When("User select data to delete and confirm")
-    public void click_delete_application() {
-        hostingPage
+    public void user_select_data_to_delete_and_confirm() {
+        websiteInstallerPage
                 .selectDataToDelete("installation files")
                 .selectDataToDelete("database")
                 .confirmDeleteInstallation();
     }
 
     @Then("Uninstall application success")
-    public void verify_uninstall_success() {
-        hostingPage.verifyDeleteInstallationSuccess();
+    public void uninstall_application_success() {
+        websiteInstallerPage.verifyDeleteInstallationSuccess();
     }
 }
